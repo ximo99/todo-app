@@ -1,25 +1,22 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    newTodo: "",
-    idForTodo: 3,
-    filter: "all",
+    newTodo: '',
+    idForTodo: 3, // Cambia este ID si tienes 3 tareas iniciales
+    filter: 'all',
     todos: [
       {
         id: 1,
-        title: "Finish the homework",
-        completed: true,
+        title: 'Finish Vue Screencast',
+        completed: false,
+        editing: false,
       },
       {
         id: 2,
-        title: "Clean the kitchen",
+        title: 'Take over the world',
         completed: false,
-      },
-      {
-        id: 3,
-        title: "Take the dog to the vet",
-        completed: false,
+        editing: false,
       },
     ],
   },
@@ -34,23 +31,26 @@ export default createStore({
       const areAllCompleted = state.todos.every((todo) => todo.completed);
       state.todos.forEach((todo) => (todo.completed = !areAllCompleted));
     },
-    changeFilter(state, filter) {
-      state.filter = filter;
+    clearCompleted(state) {
+      state.todos = state.todos.filter((todo) => !todo.completed);
+    },
+    finishedEdit(state, updatedTodo) {
+      const index = state.todos.findIndex((todo) => todo.id === updatedTodo.id);
+      if (index !== -1) {
+        state.todos[index] = { ...state.todos[index], ...updatedTodo };
+      }
     },
   },
   getters: {
     remaining(state) {
       return state.todos.filter((todo) => !todo.completed).length;
     },
-    anyRemaining(state, getters) {
-      return getters.remaining !== 0;
-    },
     todosFiltered(state) {
-      if (state.filter === "all") {
+      if (state.filter === 'all') {
         return state.todos;
-      } else if (state.filter === "active") {
+      } else if (state.filter === 'active') {
         return state.todos.filter((todo) => !todo.completed);
-      } else if (state.filter === "completed") {
+      } else if (state.filter === 'completed') {
         return state.todos.filter((todo) => todo.completed);
       }
       return state.todos;
