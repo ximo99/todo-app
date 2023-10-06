@@ -1,11 +1,10 @@
 <template>
   <div id="app" class="container">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <todo-list>
-      
-    </todo-list>
+    <h1 class="title">Todo List App</h1>
+    <todo-list/>
   </div>
 </template>
+
 
 <script>
 import TodoList from './components/TodoList.vue'
@@ -37,9 +36,10 @@ export default {
   font-size: 24px;
 }
 
-.logo {
-  display: block;
-  margin: 20px auto;
-  height: 75px;
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
