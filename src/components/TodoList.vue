@@ -1,16 +1,17 @@
 <template>
     <div>
-        <input type="text" class="todo-input" placeholder="Write down your tasks to do" v-model="newTodo" @keyup.enter="addTodo">
+        <input type="text" class="todo-input" placeholder="Write down your tasks to do" v-model="newTodo"
+            @keyup.enter="addTodo">
         <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
             <todo-item v-for="todo in todosFiltered" :key="todo.id" :todo="todo" :checkAll="!anyRemaining"
-                @removedTodo="removeTodo" @finishedEdit="finishedEdit">
-            </todo-item>
+                @removedTodo="removeTodo"></todo-item>
         </transition-group>
 
         <div class="extra-container">
             <div>
                 <label>
-                    <input class="check-all-button" type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check All
+                    <input class="check-all-button" type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check
+                    All
                 </label>
             </div>
             <div>{{ remaining }} items left</div>
@@ -53,20 +54,15 @@ export default {
         ...mapGetters(['remaining', 'anyRemaining', 'todosFiltered', 'showClearCompletedButton']),
     },
     methods: {
-        ...mapMutations(['removeTodo', 'updateTodo']),
+        ...mapMutations(['removeTodo']),
         addTodo() {
             if (this.newTodo.trim() === '') return;
             this.$store.commit('addTodo', {
                 id: this.idForTodo++,
                 title: this.newTodo,
                 completed: false,
-                editing: false,
             });
             this.newTodo = '';
-        },
-        finishedEdit(todo) {
-            todo.editing = false;
-            this.updateTodo(todo);
         },
         checkAllTodos() {
             this.$store.commit('checkAllTodos');
@@ -75,16 +71,14 @@ export default {
             this.$store.commit('changeFilter', filter);
         },
     }
-
 }
 </script>
-
   
 <style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
 label {
-  margin-top: 100px;
+    margin-top: 100px;
 }
 
 .todo-input {
@@ -155,20 +149,6 @@ label {
     margin-left: 12px;
 }
 
-.todo-item-edit {
-    font-size: 24px;
-    color: #D8E9A8;
-    margin-left: 12px;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-
-    &:focus {
-        outline: none;
-    }
-}
-
 .completed {
     text-decoration: line-through;
     color: grey;
@@ -185,27 +165,27 @@ label {
 }
 
 .check-all-button {
-  appearance: none;
-  width: 23px;
-  height: 23px;
-  background-color: white;
-  border: 2px solid #4E9F3D;
-  border-radius: 4px;
-  cursor: pointer;
-  outline: none;
-  font-size: 16px;
-  line-height: 23px;
-  vertical-align: middle;
+    appearance: none;
+    width: 23px;
+    height: 23px;
+    background-color: white;
+    border: 2px solid #4E9F3D;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    line-height: 23px;
+    vertical-align: middle;
 }
 
 .check-all-button:checked::before {
-  content: "\2713";
-  font-size: 18px;
-  color: white;
-  line-height: 20px;
-  text-align: center;
-  display: block;
-  background-color: #4E9F3D;
+    content: "\2713";
+    font-size: 18px;
+    color: white;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+    background-color: #4E9F3D;
 }
 
 button {
@@ -242,3 +222,4 @@ button {
     opacity: 0;
 }
 </style>
+  

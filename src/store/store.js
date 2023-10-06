@@ -10,19 +10,16 @@ export default createStore({
         id: 1,
         title: "Finish the homework",
         completed: true,
-        editing: false,
       },
       {
         id: 2,
         title: "Clean the kitchen",
         completed: false,
-        editing: false,
       },
       {
         id: 3,
         title: "Take the dog to the vet",
         completed: false,
-        editing: false,
       },
     ],
   },
@@ -32,12 +29,6 @@ export default createStore({
     },
     removeTodo(state, id) {
       state.todos = state.todos.filter((todo) => todo.id !== id);
-    },
-    updateTodo(state, updatedTodo) {
-      const index = state.todos.findIndex((todo) => todo.id === updatedTodo.id);
-      if (index !== -1) {
-        state.todos.splice(index, 1, updatedTodo);
-      }
     },
     clearCompleted(state) {
       state.todos = state.todos.filter((todo) => !todo.completed);
