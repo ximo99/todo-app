@@ -40,6 +40,9 @@ export default createStore({
         state.todos[index] = { ...state.todos[index], ...updatedTodo };
       }
     },
+    changeFilter(state, filter) {
+      state.filter = filter;
+    },
   },
   getters: {
     remaining(state) {
