@@ -1,7 +1,7 @@
 <template>
     <div>
         <input type="text" class="todo-input" placeholder="Write down your tasks to do" v-model="newTodo"
-            @keyup.enter="addTodo">
+            @keyup.enter="addTodo" />
         <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
             <todo-item v-for="todo in todosFiltered" :key="todo.id" :todo="todo" :checkAll="!anyRemaining"
                 @removedTodo="removeTodo"></todo-item>
@@ -10,76 +10,85 @@
         <div class="extra-container">
             <div>
                 <label>
-                    <input class="check-all-button" type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check
-                    All
+                    <input class="check-all-button" type="checkbox" :checked="!anyRemaining" @change="checkAllTodos" />
+                    Check All
                 </label>
             </div>
-            <div>{{ remaining }} items left</div>
+            <div>{{ remainingText }}</div>
         </div>
 
         <div class="extra-container">
             <div>
-                <button :class="{ active: filter === 'all' }" @click="changeFilter('all')">All</button>
-                <button :class="{ active: filter === 'active' }" @click="changeFilter('active')">Active</button>
-                <button :class="{ active: filter === 'completed' }" @click="changeFilter('completed')">Completed</button>
-            </div>
-
-            <div>
-                <transition name="fade">
-                    <button v-if="showClearCompletedButton" @click="clearCompleted">Clear Completed</button>
-                </transition>
+                <button :class="{ active: filter === 'all' }" @click="changeFilter('all')">
+                    All
+                </button>
+                <button :class="{ active: filter === 'active' }" @click="changeFilter('active')">
+                    Active
+                </button>
+                <button :class="{ active: filter === 'completed' }" @click="changeFilter('completed')">
+                    Completed
+                </button>
             </div>
         </div>
     </div>
 </template>
   
 <script>
-import TodoItem from './TodoItem'
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import TodoItem from "./TodoItem";
+import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
-    name: 'todo-list',
-    components: {
-        TodoItem,
+  name: "todo-list",
+  components: {
+    TodoItem,
+  },
+  data() {
+    return {
+      newTodo: "",
+      idForTodo: 3,
+      filter: "all",
+    };
+  },
+  computed: {
+    ...mapState(["todos"]),
+    ...mapGetters([
+      "remaining",
+      "anyRemaining",
+      "todosFiltered",
+      "showClearCompletedButton",
+    ]),
+    remainingText() {
+      if (this.remaining === 0) {
+        return "All tasks finished";
+      } else {
+        return this.remaining + " tasks to finish";
+      }
     },
-    data() {
-        return {
-            newTodo: '',
-            idForTodo: 3,
-            filter: 'all',
-        }
+  },
+  methods: {
+    ...mapMutations(["removeTodo"]),
+    addTodo() {
+      if (this.newTodo.trim() === "") return;
+      this.$store.commit("addTodo", {
+        id: this.idForTodo++,
+        title: this.newTodo,
+        completed: false,
+      });
+      this.newTodo = "";
     },
-    computed: {
-        ...mapState(['todos']),
-        ...mapGetters(['remaining', 'anyRemaining', 'todosFiltered', 'showClearCompletedButton']),
+    checkAllTodos() {
+      this.$store.commit("checkAllTodos");
     },
-    methods: {
-        ...mapMutations(['removeTodo']),
-        addTodo() {
-            if (this.newTodo.trim() === '') return;
-            this.$store.commit('addTodo', {
-                id: this.idForTodo++,
-                title: this.newTodo,
-                completed: false,
-            });
-            this.newTodo = '';
-        },
-        checkAllTodos() {
-            this.$store.commit('checkAllTodos');
-        },
-        changeFilter(filter) {
-            this.$store.commit('changeFilter', filter);
-        },
-    }
-}
+    changeFilter(filter) {
+      this.$store.commit("changeFilter", filter);
+    },
+  },
+};
 </script>
+  
   
 <style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
-
-label {
-    margin-top: 100px;
-}
 
 .todo-input {
     width: 100%;
@@ -191,25 +200,22 @@ label {
 button {
     font-size: 14px;
     background-color: #D8E9A8;
+    color: #4E9F3D;
     appearance: none;
     margin-right: 5px;
     border: none;
     border-radius: 5px;
     padding: 5px;
-
-    &:hover {
-        background: #4E9F3D;
-        font-weight: bold;
-        color: #191A19;
-    }
-
-    &:focus {
-        outline: none;
-    }
 }
 
-.active {
+button:hover {
+    font-weight: bold;
+}
+
+button:focus {
     background: #4E9F3D;
+    font-weight: bold;
+    color: #FFFFFF;
 }
 
 .fade-enter-active,

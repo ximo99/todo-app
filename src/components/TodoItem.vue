@@ -36,8 +36,7 @@ export default {
         }
     },
     methods: {
-        // Mapea las mutaciones de Vuex
         ...mapMutations(['removeTodo', 'updateTodo']),
     }
 }
-</script>  
+</script>

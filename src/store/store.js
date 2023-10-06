@@ -30,9 +30,6 @@ export default createStore({
     removeTodo(state, id) {
       state.todos = state.todos.filter((todo) => todo.id !== id);
     },
-    clearCompleted(state) {
-      state.todos = state.todos.filter((todo) => !todo.completed);
-    },
     checkAllTodos(state) {
       const areAllCompleted = state.todos.every((todo) => todo.completed);
       state.todos.forEach((todo) => (todo.completed = !areAllCompleted));
