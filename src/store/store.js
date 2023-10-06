@@ -8,13 +8,19 @@ export default createStore({
     todos: [
       {
         id: 1,
-        title: "Finish Vue Screencast",
-        completed: false,
+        title: "Finish the homework",
+        completed: true,
         editing: false,
       },
       {
         id: 2,
-        title: "Take over the world",
+        title: "Clean the kitchen",
+        completed: false,
+        editing: false,
+      },
+      {
+        id: 3,
+        title: "Take the dog to the vet",
         completed: false,
         editing: false,
       },

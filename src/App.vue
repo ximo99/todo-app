@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <h1 class="title">Todo List App</h1>
-    <todo-list/>
+    <todo-list></todo-list>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
 <style>
 * {
   box-sizing: border-box;
+  background-color: #191A19;
 }
 
 .container {
@@ -31,9 +32,10 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   margin-top: 60px;
   font-size: 24px;
+  background-color: #191A19;
+  color: #D8E9A8;
 }
 
 .title {

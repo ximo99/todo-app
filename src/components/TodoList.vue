@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo" @keyup.enter="addTodo">
+        <input type="text" class="todo-input" placeholder="Write down your tasks to do" v-model="newTodo" @keyup.enter="addTodo">
         <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
             <todo-item v-for="todo in todosFiltered" :key="todo.id" :todo="todo" :checkAll="!anyRemaining"
                 @removedTodo="removeTodo" @finishedEdit="finishedEdit">
@@ -8,7 +8,11 @@
         </transition-group>
 
         <div class="extra-container">
-            <div><label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check All</label></div>
+            <div>
+                <label>
+                    <input class="check-all-button" type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check All
+                </label>
+            </div>
             <div>{{ remaining }} items left</div>
         </div>
 
@@ -45,20 +49,27 @@ export default {
         }
     },
     computed: {
-        // Mapea los estados de Vuex a las propiedades computadas
         ...mapState(['todos']),
-        // Mapea los getters de Vuex
         ...mapGetters(['remaining', 'anyRemaining', 'todosFiltered', 'showClearCompletedButton']),
     },
     methods: {
-        // Mapea las mutaciones de Vuex
         ...mapMutations(['removeTodo', 'updateTodo']),
+        addTodo() {
+            if (this.newTodo.trim() === '') return;
+            this.$store.commit('addTodo', {
+                id: this.idForTodo++,
+                title: this.newTodo,
+                completed: false,
+                editing: false,
+            });
+            this.newTodo = '';
+        },
         finishedEdit(todo) {
-            todo.editing = false; // Marcar como no editando
-            this.updateTodo(todo); // Llama a la mutación para actualizar la tarea en el store
+            todo.editing = false;
+            this.updateTodo(todo);
         },
         checkAllTodos() {
-            this.$store.commit('checkAllTodos'); // Utiliza la mutación de Vuex
+            this.$store.commit('checkAllTodos');
         },
         changeFilter(filter) {
             this.$store.commit('changeFilter', filter);
@@ -72,15 +83,28 @@ export default {
 <style lang="scss">
 @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
+label {
+  margin-top: 100px;
+}
+
 .todo-input {
     width: 100%;
     padding: 10px 18px;
     font-size: 18px;
     margin-bottom: 16px;
+    background-color: #D8E9A8;
+    border-radius: 20px;
+    border: 0px;
+    color: #4E9F3D;
+    font-weight: bold;
 
     &:focus {
         outline: 0;
     }
+}
+
+.todo-input::placeholder {
+    font-weight: normal;
 }
 
 .todo-item {
@@ -96,29 +120,48 @@ export default {
     margin-left: 14px;
 
     &:hover {
-        color: black;
+        color: white;
     }
 }
 
 .todo-item-left {
-    // later
     display: flex;
     align-items: center;
 }
 
+.todo-item-left input[type="checkbox"] {
+    appearance: none;
+    width: 23px;
+    height: 23px;
+    background-color: white;
+    border: 2px solid #4E9F3D;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+}
+
+.todo-item-left input[type="checkbox"]:checked::before {
+    content: "\2713";
+    font-size: 18px;
+    color: white;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+    background-color: #4E9F3D;
+}
+
 .todo-item-label {
     padding: 10px;
-    border: 1px solid white;
     margin-left: 12px;
 }
 
 .todo-item-edit {
     font-size: 24px;
-    color: #2c3e50;
+    color: #D8E9A8;
     margin-left: 12px;
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc; //override defaults
+    border: 1px solid #ccc;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
     &:focus {
@@ -135,20 +178,49 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 16px;
+    font-size: 18px;
     border-top: 1px solid lightgrey;
     padding-top: 14px;
     margin-bottom: 14px;
 }
 
+.check-all-button {
+  appearance: none;
+  width: 23px;
+  height: 23px;
+  background-color: white;
+  border: 2px solid #4E9F3D;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  font-size: 16px;
+  line-height: 23px;
+  vertical-align: middle;
+}
+
+.check-all-button:checked::before {
+  content: "\2713";
+  font-size: 18px;
+  color: white;
+  line-height: 20px;
+  text-align: center;
+  display: block;
+  background-color: #4E9F3D;
+}
+
 button {
     font-size: 14px;
-    background-color: white;
+    background-color: #D8E9A8;
     appearance: none;
     margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
 
     &:hover {
-        background: lightgreen;
+        background: #4E9F3D;
+        font-weight: bold;
+        color: #191A19;
     }
 
     &:focus {
@@ -157,10 +229,9 @@ button {
 }
 
 .active {
-    background: lightgreen;
+    background: #4E9F3D;
 }
 
-// CSS Transitions
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity .2s;

@@ -15,7 +15,7 @@
 </template>
   
 <script>
-import { mapMutations } from 'vuex'; // Importa las utilidades de Vuex
+import { mapMutations } from 'vuex';
 
 export default {
     name: 'todo-item',
