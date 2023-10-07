@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="container">
     <h1 class="title">Todo List App</h1>
+    <h2 class="subtitle">by Ximo Casanova</h2>
     <todo-list></todo-list>
   </div>
 </template>
@@ -43,5 +44,16 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 30px;
+}
+
+.subtitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: normal;
+  margin-bottom: 5%;
 }
 </style>

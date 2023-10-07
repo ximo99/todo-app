@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo"
+        <input type="text" class="todo-input" placeholder="Write your tasks here" v-model="newTodo"
             @keyup.enter="addTodo" />
         <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
             <todo-item v-for="todo in todosFiltered" :key="todo.id" :todo="todo" :checkAll="!anyRemaining"
@@ -11,7 +11,7 @@
             <div>
                 <label>
                     <input class="check-all-button" type="checkbox" :checked="!anyRemaining" @change="checkAllTodos" />
-                    Check All
+                    <span class="check-all-text">Check All</span>
                 </label>
             </div>
             <div>{{ remaining }} items left</div>
@@ -192,6 +192,12 @@ export default {
     display: block;
     background-color: #4E9F3D;
 }
+
+.check-all-text {
+  font-size: 18px;
+  margin-left: 20px;
+}
+
 
 .completed {
     text-decoration: line-through;
