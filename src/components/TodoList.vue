@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <input type="text" class="todo-input" placeholder="What needs to be done" v-model="newTodo"
