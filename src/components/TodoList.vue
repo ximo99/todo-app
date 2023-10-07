@@ -90,10 +90,19 @@ export default {
     padding: 10px 18px;
     font-size: 18px;
     margin-bottom: 16px;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 0px;
+    color: #4E9F3D;
+    background-color: #D8E9A8;
 
     &:focus {
         outline: 0;
     }
+}
+
+.todo-input::placeholder {
+    font-weight: normal;
 }
 
 .todo-item {
@@ -114,14 +123,35 @@ export default {
 }
 
 .todo-item-left {
-    // later
     display: flex;
     align-items: center;
 }
 
+.todo-item-left input[type="checkbox"] {
+    appearance: none;
+    width: 25px;
+    height: 23px;
+    background-color: white;
+    border: 2px solid #4E9F3D;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+}
+
+.todo-item-left input[type="checkbox"]:checked::before {
+    content: "\2713";
+    font-size: 16px;
+    color: white;
+    background-color: #4E9F3D;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+}
+
 .todo-item-label {
     padding: 10px;
-    border: 1px solid white;
+    border: none;
     margin-left: 12px;
 }
 
@@ -131,12 +161,36 @@ export default {
     margin-left: 12px;
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc; //override defaults
+    border: 1px solid #ccc;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
 
     &:focus {
         outline: none;
     }
+}
+
+.check-all-button {
+    appearance: none;
+    width: 23px;
+    height: 23px;
+    background-color: white;
+    border: 2px solid #4E9F3D;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    font-size: 30px;
+    line-height: 20px;
+    vertical-align: middle;
+}
+
+.check-all-button:checked::before {
+    content: "\2713";
+    font-size: 18px;
+    color: white;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+    background-color: #4E9F3D;
 }
 
 .completed {
@@ -156,11 +210,17 @@ export default {
 
 button {
     font-size: 14px;
-    background-color: white;
+    background-color: #D8E9A8;
     appearance: none;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
 
     &:hover {
-        background: lightgreen;
+        background: #4E9F3D;
+        font-weight: bold;
+        color: #191A19;
     }
 
     &:focus {
@@ -169,10 +229,10 @@ button {
 }
 
 .active {
-    background: lightgreen;
+    background: #4E9F3D;
 }
 
-// CSS Transitions
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity .2s;
