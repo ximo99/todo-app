@@ -194,10 +194,9 @@ export default {
 }
 
 .check-all-text {
-  font-size: 18px;
-  margin-left: 20px;
+    font-size: 18px;
+    margin-left: 20px;
 }
-
 
 .completed {
     text-decoration: line-through;

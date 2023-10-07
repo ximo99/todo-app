@@ -1,13 +1,13 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-import store from './store/store';
+import { createApp } from "vue";
+import App from "./App.vue";
+import store from "./store/store";
 
-import vFocus from './directives/v-focus';
+import vFocus from "./directives/v-focus";
 
 const app = createApp(App);
 
-app.directive('focus', vFocus);
+app.directive("focus", vFocus);
 
 app.use(store);
 
-app.mount('#app');
+app.mount("#app");
