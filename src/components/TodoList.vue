@@ -221,11 +221,12 @@ button {
     border: none;
     border-radius: 5px;
     padding: 5px;
+    color: #4E9F3D;
 
     &:hover {
         background: #4E9F3D;
         font-weight: bold;
-        color: #191A19;
+        color: white;
     }
 
     &:focus {
@@ -234,6 +235,7 @@ button {
 }
 
 .active {
+    color: white;
     background: #4E9F3D;
 }
 
