@@ -1,4 +1,4 @@
-# todo-app
+# Todo-app
 
 🎞️ Video with the result: https://youtu.be/CvVU-R5UwSs
 
